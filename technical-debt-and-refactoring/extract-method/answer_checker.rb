@@ -7,12 +7,9 @@ class AnswerChecker
         output = []
         output.append("Checking answers for #{answer_file}")
 
-        # open files and then read them
-        answer_key_file = File.open(@answer_key_filename)
-        supplied_answer_file = File.open(answer_file)
-
-        answer_key = answer_key_file.readlines()
-        supplied_answers = supplied_answer_file.readlines()
+        # get the answer key and supplied answers
+        answer_key = load_answer_file(@answer_key_filename)
+        supplied_answers = load_answer_file(answer_file)
 
         test_length = answer_key.length
         if test_length != supplied_answers.length
@@ -29,5 +26,14 @@ class AnswerChecker
         output.append("Score:")
         output.append("#{score}/#{test_length}")
         output
+    end
+
+    private
+
+    # load_answer_file takes a filename/path and returns the parsed lines
+    def load_answer_file(filename)
+        File.open(filename) do |f|
+            f.readlines()
+        end
     end
 end
