@@ -16,16 +16,23 @@ class AnswerChecker
             output.append("ERROR: didn't supply the right number of answers")
         end
 
-        score = 0
-        (0..test_length-1).each do |i|
-            if answer_key[i] == supplied_answers[i]
-                score += 1
-            end
-        end
+        score = score_answers(answer_key, supplied_answers)
 
         output.append("Score:")
         output.append("#{score}/#{test_length}")
         output
+    end
+
+    def score_answers(key, answers)
+        score = 0
+
+        (0..key.length-1).each do |i|
+            if key[i] == answers[i]
+                score += 1
+            end
+        end
+
+        score
     end
 
     private
